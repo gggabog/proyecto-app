@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\Users;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,7 @@ Route::group([
       Route::resource('/payments', PaymentsController::class)->middleware('role:admin|prestamista|secretaria');
       Route::resource('/diary', DiaryController::class)->middleware('role:admin|prestamista');
       Route::get('/check',  [AuthController::class, 'check']);
+      Route::get('/pdfLoans', [PDFController::class, 'generatePDFLastLoans']);
+      Route::get('/pdfPayments', [PDFController::class, 'generatePDFLastPayments']);
+      Route::get('/invoice/{id}', [PDFController::class, 'generateInvoice']);
   });

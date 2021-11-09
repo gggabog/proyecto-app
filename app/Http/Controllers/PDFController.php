@@ -53,11 +53,35 @@ class PDFController extends Controller
         return $pdf->download('UltimosPagos.pdf');
     }
 
+    public function getPagos()
+    {
+        $datos = DB::table('payments')
+            ->where('date_payment', '>=', now()->subDays(30))
+            ->where('register_status_db_payment', '=', 0)
+            ->join('loans', 'loans.id', '=', 'payments.fk_id_loan' )
+            ->join('customers', 'customers.id', '=', 'loans.fk_id_cliente' )
+            ->select('customers.name_customer','loans.id','payments.serial_payment','payments.amount_payment','payments.date_payment')
+            ->get();
+    
+        return response($datos);
+    }
+
+    public function getPrestamos()
+    {
+        $datos = DB::table('loans')
+            ->where('date_start_loan', '>=', now()->subDays(30))
+            ->where('register_status_db_loan', '=', 0)
+            ->join('customers', 'customers.id', '=', 'loans.fk_id_cliente' )
+            ->select('customers.name_customer','loans.id', 'loans.amount_loan', 'loans.interest_rate_loan', 'loans.date_start_loan')
+            ->get();
+
+        return response($datos);
+    }
+
     public function generateInvoice($id)
     {
         $datos = DB::table('payments')
             ->where('payments.id',$id)
-            ->where('date_payment', '>=', now()->subDays(30))
             ->where('register_status_db_payment', '=', 0)
             ->join('loans', 'loans.id', '=', 'payments.fk_id_loan' )
             ->join('customers', 'customers.id', '=', 'loans.fk_id_cliente' )

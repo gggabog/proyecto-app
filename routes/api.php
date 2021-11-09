@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CashOrderController;
 use App\Http\Controllers\CustomersController;
-use App\Http\Controllers\API\CEOControlller;
 use App\Http\Controllers\DiaryController;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\PaymentsController;
@@ -12,6 +11,8 @@ use App\Http\Controllers\Users;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\RespaldoController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/pdfLoans', [PDFController::class, 'generatePDFLastLoans']);
+Route::get('/getPagos', [PDFController::class, 'getPagos']);
+Route::get('/getPrestamos', [PDFController::class, 'getPrestamos']);
+Route::post('/tasks', [RespaldoController::class,'exportCsv']);
+Route::post('/pdfPayments', [PDFController::class, 'generatePDFLastPayments']);
+Route::post('/invoice/{id}', [PDFController::class, 'generateInvoice']);
 Route::group([
     'middleware' => 'auth:api'
   ], function() {
       Route::get('logout', [AuthController::class, 'logout']);
       Route::resource('/users', Users::class)->middleware('role:prestamista|admin|secretaria');
-      Route::resource('/ceo', CEOControlller::class)->middleware('role:prestamista|admin|secretaria');
       Route::resource('/customer', CustomersController::class)->middleware('role:admin|prestamista|secretaria');
       Route::resource('/audit', AuditController::class)->middleware('role:admin');
       Route::resource('/cashorder', CashOrderController::class)->middleware('role:admin|secretaria');
@@ -42,7 +48,5 @@ Route::group([
       Route::resource('/payments', PaymentsController::class)->middleware('role:admin|prestamista|secretaria');
       Route::resource('/diary', DiaryController::class)->middleware('role:admin|prestamista');
       Route::get('/check',  [AuthController::class, 'check']);
-      Route::get('/pdfLoans', [PDFController::class, 'generatePDFLastLoans']);
-      Route::get('/pdfPayments', [PDFController::class, 'generatePDFLastPayments']);
-      Route::get('/invoice/{id}', [PDFController::class, 'generateInvoice']);
+      Route::get('/respaldo',  [TaskController::class, 'respaldo']);
   });

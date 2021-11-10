@@ -31,7 +31,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/pdfLoans', [PDFController::class, 'generatePDFLastLoans']);
 Route::get('/getPagos', [PDFController::class, 'getPagos']);
 Route::get('/getPrestamos', [PDFController::class, 'getPrestamos']);
-Route::post('/tasks', [RespaldoController::class,'exportCsv']);
+Route::post('/tasks/clientes', [RespaldoController::class,'clientes']);
+Route::post('/tasks/pedidos', [RespaldoController::class,'pedidos']);
+Route::post('/tasks/pagos', [RespaldoController::class,'pagos']);
+Route::post('/tasks/prestamos', [RespaldoController::class,'prestamos']);
+Route::post('/tasks/agenda', [RespaldoController::class,'agenda']);
+Route::post('/tasks/usuarios', [RespaldoController::class,'usuarios']);
 Route::post('/pdfPayments', [PDFController::class, 'generatePDFLastPayments']);
 Route::post('/invoice/{id}', [PDFController::class, 'generateInvoice']);
 Route::group([

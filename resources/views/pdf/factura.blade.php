@@ -44,9 +44,9 @@ header {
 }
 
 h1 {
-  border-top: 1px solid  #5D6975;
-  border-bottom: 1px solid  #5D6975;
-  color: #5D6975;
+  border-top: 1px solid  whitesmoke;
+  border-bottom: 1px solid  whitesmoke;
+  color: whitesmoke;
   font-size: 2.4em;
   line-height: 1.4em;
   font-weight: normal;
@@ -142,12 +142,15 @@ footer {
   padding: 8px 0;
   text-align: center;
 }
+.container{
+  padding: 10px;
+}
     </style>
 </head>
 <body>
-    <header class="clearfix">
+    <header class="clearfix container">
         <div id="logo">
-          <img src="logo.png">
+          <img src="https://i.imgur.com/bub7YYa.png">
         </div>
         <h1>FACTURA</h1>
 
@@ -159,7 +162,7 @@ footer {
 
     </div>
       </header>
-      <main>
+      <main class="container">
         <table>
           <thead>
             <tr>

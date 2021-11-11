@@ -42,7 +42,7 @@
       }
 
       table {
-        width: 800px;
+        margin-left: 7px;
         border-right-color: #ffffff;
         margin-top: 100px;
         font-size: 18px;
@@ -70,6 +70,7 @@
       tbody tr:nth-child(even){
         background-color: #e9ecef;
       }
+      
     </style>
 </head>
 <body>
@@ -77,15 +78,15 @@
     <h1>PRESTAMOS DE LOS ULTIMOS 30 DIAS</h1>
 </header>
 
-<main >
+<main>
      <table>
       <thead>
         <tr>
           <th>Cliente</th>
-          <th>Nro.Prestamo</th>
-          <th>Monto</th>
-          <th>Tasa de interes</th>
-          <th>Fecha</th>
+          <th style="width: 10%;">Nro.Prestamo</th>
+          <th style="width: 10%;">Monto</th>
+          <th style="width: 10%;">Tasa de interes</th>
+          <th style="width: 20%;">Fecha</th>
         </tr>
       </thead>
 

@@ -31,27 +31,28 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/pdfLoans', [PDFController::class, 'generatePDFLastLoans']);
 Route::get('/getPagos', [PDFController::class, 'getPagos']);
 Route::get('/getPrestamos', [PDFController::class, 'getPrestamos']);
-Route::post('/tasks/clientes', [RespaldoController::class,'clientes']);
-Route::post('/tasks/pedidos', [RespaldoController::class,'pedidos']);
-Route::post('/tasks/pagos', [RespaldoController::class,'pagos']);
-Route::post('/tasks/prestamos', [RespaldoController::class,'prestamos']);
-Route::post('/tasks/agenda', [RespaldoController::class,'agenda']);
-Route::post('/tasks/usuarios', [RespaldoController::class,'usuarios']);
+Route::post('/tasks/clientes', [RespaldoController::class, 'clientes']);
+Route::post('/tasks/pedidos', [RespaldoController::class, 'pedidos']);
+Route::post('/tasks/pagos', [RespaldoController::class, 'pagos']);
+Route::post('/tasks/prestamos', [RespaldoController::class, 'prestamos']);
+Route::post('/tasks/agenda', [RespaldoController::class, 'agenda']);
+Route::post('/tasks/usuarios', [RespaldoController::class, 'usuarios']);
 Route::post('/pdfPayments', [PDFController::class, 'generatePDFLastPayments']);
+Route::post('/note/{id}', [PDFController::class, 'generateDiary']);
 Route::post('/invoice/{id}', [PDFController::class, 'generateInvoice']);
 Route::group([
     'middleware' => 'auth:api'
-  ], function() {
-      Route::get('logout', [AuthController::class, 'logout']);
-      Route::resource('/users', Users::class)->middleware('role:prestamista|admin|secretaria');
-      Route::resource('/customer', CustomersController::class)->middleware('role:admin|prestamista|secretaria');
-      Route::resource('/audit', AuditController::class)->middleware('role:admin');
-      Route::resource('/cashorder', CashOrderController::class)->middleware('role:admin|secretaria');
-      Route::resource('/loans', LoansController::class)->middleware('role:admin|prestamista|secretaria');
-      Route::get('/cashorderAdd/{id}',[CashOrderController::class, 'addLoan'])->middleware('role:admin|prestamista|secretaria');
-      Route::get('/cashorderDeny/{id}',[CashOrderController::class, 'denyLoan'])->middleware('role:admin|prestamista|secretaria');
-      Route::resource('/payments', PaymentsController::class)->middleware('role:admin|prestamista|secretaria');
-      Route::resource('/diary', DiaryController::class)->middleware('role:admin|prestamista');
-      Route::get('/check',  [AuthController::class, 'check']);
-      Route::get('/respaldo',  [TaskController::class, 'respaldo']);
-  });
+], function () {
+    Route::get('logout', [AuthController::class, 'logout']);
+    Route::resource('/users', Users::class)->middleware('role:prestamista|admin|secretaria');
+    Route::resource('/customer', CustomersController::class)->middleware('role:admin|prestamista|secretaria');
+    Route::resource('/audit', AuditController::class)->middleware('role:admin');
+    Route::resource('/cashorder', CashOrderController::class)->middleware('role:admin|secretaria');
+    Route::resource('/loans', LoansController::class)->middleware('role:admin|prestamista|secretaria');
+    Route::get('/cashorderAdd/{id}', [CashOrderController::class, 'addLoan'])->middleware('role:admin|prestamista|secretaria');
+    Route::get('/cashorderDeny/{id}', [CashOrderController::class, 'denyLoan'])->middleware('role:admin|prestamista|secretaria');
+    Route::resource('/payments', PaymentsController::class)->middleware('role:admin|prestamista|secretaria');
+    Route::resource('/diary', DiaryController::class)->middleware('role:admin|prestamista');
+    Route::get('/check',  [AuthController::class, 'check']);
+    Route::get('/respaldo',  [TaskController::class, 'respaldo']);
+});

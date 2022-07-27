@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Audit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuditController extends Controller
 {
@@ -14,8 +15,10 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $auditorias = Audit::all();
-        return response(['message'=>'Ok', 'auditorias'=>$auditorias]);
+        $auditorias = DB::table('audits')->join('users', 'users.id', '=', 'audits.fk_id_user')
+            ->select('description_aud', 'fk_id_user', 'action_aud', 'users.name', 'users.email', 'users.level')
+            ->get();
+        return response(['message' => 'Ok', 'auditorias' => $auditorias]);
     }
 
     /**
